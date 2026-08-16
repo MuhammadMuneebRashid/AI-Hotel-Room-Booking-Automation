@@ -97,3 +97,7 @@ The main booking workflow is implemented. Room availability and date-overlap val
 ## 👨‍💻 Project Goal
 
 This project was built as part of my journey toward becoming an *AI Automation Specialist*, focusing on real-world business automation using n8n, AI Agents, APIs, webhooks, and cloud-based tools.
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-08-15 083115" src="https://github.com/user-attachments/assets/9e654bb7-2dc6-4678-8c2c-889350e9a1d1" />
+
