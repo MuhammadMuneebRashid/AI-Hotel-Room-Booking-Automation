@@ -1,10 +1,10 @@
 {
-  "name": "My workflow 7",
+  "name": "My workflow",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "e4d31121-6b1d-4474-989a-46cbb7f49f53",
+        "path": "577f09d0-4813-4b8e-945e-e1004adf17fa",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
@@ -13,13 +13,13 @@
         0,
         0
       ],
-      "id": "4b508781-470a-41d5-887b-780913f8f35a",
+      "id": "7f2edff2-d883-46cf-b5a5-5d324b11f897",
       "name": "Webhook",
-      "webhookId": "e4d31121-6b1d-4474-989a-46cbb7f49f53"
+      "webhookId": "577f09d0-4813-4b8e-945e-e1004adf17fa"
     },
     {
       "parameters": {
-        "jsCode": "const field=$input.first().json.body.data.fields;\nconst field_1=field.find(f=>f.label===\"Full Name:\");\nconst name=field_1.value;\nconst field_2=field.find(f=>f.label===\"Email:\");\nconst email=field_2.value;\nconst field_3=field.find(f=>f.label===\"Phone:\");\nconst phone=field_3.value;\nconst field_4=field.find(f=>f.label===\"Check-in Date:\");\nconst check_in_date=field_4.value;\nconst field_5=field.find(f=>f.label===\"Check-out Date:\");\nconst check_out_date=field_5.value;\nconst field_6=field.find(f=>f.label===\"Room-type:\");\nconst value=field_6.value[0];\nconst option=field_6.options.find(o=>o.id===value);\nconst room_type=option.text;\nconst field_7=field.find(f=>f.label===\"Number of Guest:\")\nconst number_of_guest=field_7.value;\nconst field_8=field.find(f=>f.label===\"Special Request:\")\nconst special_request=field_8.value;\nreturn[{\n  name,\n  email,\n  phone,\n  check_in_date,\n  check_out_date,\n  room_type,\n  number_of_guest,\n  special_request\n}];"
+        "jsCode": "const fields=$input.first().json.body.data.fields;\nconst field_1=fields.find(f=>f.label===\"Full Name:\");\nconst name=field_1.value;\nconst field_2=fields.find(f=>f.label===\"Email:\");\nconst email=field_2.value;\nconst field_3=fields.find(f=>f.label===\"Phone:\");\nconst phone=field_3.value;\nconst field_4=fields.find(f=>f.label===\"Check-in Date:\");\nconst check_in_date=field_4.value;\nconst field_5=fields.find(f=>f.label===\"Check-out Date:\");\nconst check_out_date=field_5.value;\nconst field_6=fields.find(f=>f.label===\"Room-type:\");\nconst value=field_6.value[0];\nconst options=field_6.options.find(o=>o.id===value);\nconst room_type=options.text;\nconst field_7=fields.find(f=>f.label===\"Number of Guest:\")\nconst number_of_guest=field_7.value;\nconst field_8=fields.find(f=>f.label===\"Special Request:\")\nconst special_request=field_8.value;\nreturn[{\n  name,\n  email,\n  phone,\n  check_in_date,\n  check_out_date,\n  room_type,\n  number_of_guest,\n  special_request\n  \n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -27,13 +27,13 @@
         224,
         0
       ],
-      "id": "6d3d54da-a356-4b17-9d05-98aae2d9ce39",
+      "id": "cbbae063-c9aa-481b-ac37-0e98790a6b6b",
       "name": "Code in JavaScript"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=analyze the information:\n\nname: {{ $json.name }}\nemail: {{ $json.email }}\nphone: {{ $json.phone }}\ncheck in date: {{ $json.check_in_date }}\ncheck out date: {{ $json.check_out_date }}\nroom type: {{ $json.room_type }}\nnumber of guest: {{ $json.number_of_guest }}\nspecial request: {{ $json.special_request }}\n\nmention any missing information.\n\nwrite a proper, professional summary.\n\ndo not set any availability or confirm any booking until you receive the required data from the workflow.\n\n\n",
+        "text": "=Anaklyze name {{ $json.name }} email{{ $json.email }} phone{{ $json.phone }} check_in_date{{ $json.check_in_date }} check_out_date{{ $json.check_out_date }} room_type{{ $json.room_type }} number_of_guest{{ $json.number_of_guest }} special_request{{ $json.special_request }} \nDisplay the missing information \ncheck the requests of the cuystomer \nwrite a professional summary\nalso check whether it is a booking, inquiry,\navailability and cancellation",
         "hasOutputParser": true,
         "options": {}
       },
@@ -43,32 +43,12 @@
         448,
         0
       ],
-      "id": "df0ad895-c47d-40c0-88ec-dedf17f7bc48",
+      "id": "731a4be1-ec78-4165-b958-305488173eaf",
       "name": "AI Agent"
     },
     {
       "parameters": {
-        "modelName": "models/gemini-3.5-flash",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1.1,
-      "position": [
-        368,
-        208
-      ],
-      "id": "5e5923a0-dced-4b1b-8f20-67a2655dc81a",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "0tJPGz6VUqPHVzUT",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n\t\"name\":\"\",\n  \"email\":\"\",\n  \"phone\":\"\",\n  \"check in date\":\"\",\n  \"check out date\":\"\",\n  \"number of days\":\"\",\n  \"room type\":\"\",\n  \"number of guest\":\"\",\n  \"special request\":\"\",\n  \"missing information\":\"\",\n  \"professional summary\":\"\"\n\n  \n  \n}"
+        "jsonSchemaExample": "{\n\t\"name\":\"\",\n  \"email\":\"\",\n  \"phone\":\"\",\n  \"check_in_date\":\"\",\n  \"check_out_date\":\"\",\n  \"room_type\":\"\",\n  \"number_of_guest\":\"\",\n  \"special_request\":\"\",\n  \"missing_information\":\"\",\n  \"professional_summary\":\"\",\n  \"check\":\"\"\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
@@ -76,7 +56,7 @@
         624,
         208
       ],
-      "id": "258fa414-56c6-4690-9d57-f4e623488fbf",
+      "id": "9a2a74b3-fce0-4ca3-a8d0-411164fdb381",
       "name": "Structured Output Parser"
     },
     {
@@ -84,75 +64,69 @@
         "assignments": {
           "assignments": [
             {
-              "id": "08e0d6db-bdc1-4d6d-b4a3-1420bab7d028",
+              "id": "6946e88f-b5a0-481f-bf16-21ff2aec4dba",
               "name": "name",
               "value": "={{ $json.output.name }}",
               "type": "string"
             },
             {
-              "id": "4f990e92-696c-487f-98af-e110227320d0",
+              "id": "91884989-f0d7-44d7-ba42-46e88f883c85",
               "name": "email",
               "value": "={{ $json.output.email }}",
               "type": "string"
             },
             {
-              "id": "49bb3881-8972-4c6e-a72b-2cfd927af13c",
+              "id": "61aa17ea-c8bd-4488-a203-6e0dd5bed1e9",
               "name": "phone",
               "value": "={{ $json.output.phone }}",
               "type": "string"
             },
             {
-              "id": "74320cb7-fc5a-4321-b155-532b14a673c4",
-              "name": "check in date",
-              "value": "={{ $json.output['check in date'] }}",
+              "id": "81607131-0cc4-46b7-a5aa-900189acb220",
+              "name": "check_in_date",
+              "value": "={{ $json.output.check_in_date }}",
               "type": "string"
             },
             {
-              "id": "7c90c484-6b16-432b-ab48-026152ccbad9",
-              "name": "check out date",
-              "value": "={{ $json.output['check out date'] }}",
+              "id": "5d79da0e-330f-4366-883e-473eafcc4519",
+              "name": "check_out_date",
+              "value": "={{ $json.output.check_out_date }}",
               "type": "string"
             },
             {
-              "id": "2f054750-646e-4f39-8311-9be22a9f1ce7",
-              "name": "number of days",
-              "value": "={{ $json.output['number of days'] }}",
+              "id": "aa401d22-5647-4011-809e-0222b12a915a",
+              "name": "room_type",
+              "value": "={{ $json.output.room_type }}",
               "type": "string"
             },
             {
-              "id": "8ee5c288-0002-4618-abbb-6e62db6c965f",
-              "name": "room type",
-              "value": "={{ $json.output['room type'] }}",
+              "id": "2a0be814-00e2-410d-8a6f-97afcdb2db39",
+              "name": "number_of_guest",
+              "value": "={{ $json.output.number_of_guest }}",
               "type": "string"
             },
             {
-              "id": "7b912aaf-9bd3-4eab-9322-8e6443cb73ad",
-              "name": "number of guest",
-              "value": "={{ $json.output['number of guest'] }}",
+              "id": "53d5099b-1309-468e-b2da-1bc7929041e4",
+              "name": "special_request",
+              "value": "={{ $json.output.special_request }}",
               "type": "string"
             },
             {
-              "id": "f42ae0e0-b0d9-4499-bbe4-6191a99a0e90",
-              "name": "special request",
-              "value": "={{ $json.output['special request'] }}",
+              "id": "962a562a-b92b-41cc-b35b-9bc9095730a1",
+              "name": "missing_information",
+              "value": "={{ $json.output.missing_information }}",
               "type": "string"
             },
             {
-              "id": "383b40ba-d4dd-40b9-b27a-9f3105358821",
-              "name": "missing information",
-              "value": "={{ $json.output['missing information'] }}",
+              "id": "d67f930a-c221-4f67-9a91-0d03b8efde37",
+              "name": "professional_summary",
+              "value": "={{ $json.output.professional_summary }}",
               "type": "string"
             },
             {
-              "id": "d483063f-1cb2-4929-b76d-057025d481e9",
-              "name": "professional summary",
-              "value": "={{ $json.output['professional summary'] }}",
-              "type": "string"
-            },
-            {
-              "id": "e842e374-1241-4e11-a7dd-9988c4cef213",
-              "name": "Available",
-              "value": "=",
+              "id": "4d53f276-bd82-4305-8cd0-a4ca3003fea8",
+              "name": "check",
+              "value": "={{ $json.output.check }}",
               "type": "string"
             }
           ]
@@ -162,11 +136,117 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        816,
+        1120,
         0
       ],
-      "id": "aa329b48-0f9b-4922-9151-32e6cc338291",
+      "id": "7451e63d-6610-424d-86a1-69ca89fabe99",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.check }}",
+                    "rightValue": "Booking",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "d999c7bf-94a8-4443-a71c-aee90862f0e3"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "001c2331-d3e3-4799-854f-a169ac975db2",
+                    "leftValue": "={{ $json.output.check }}",
+                    "rightValue": "availability",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "fef3c72b-a3f4-4ce4-b1af-7c1218cb6552",
+                    "leftValue": "={{ $json.output.check }}",
+                    "rightValue": "cancellation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ab7505ea-c952-4afd-bf7e-9635cc452f5b",
+                    "leftValue": "={{ $json.output.check }}",
+                    "rightValue": "inquiry",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        -32
+      ],
+      "id": "1768ed0d-1eba-41c4-bc9b-3ccfd701075c",
+      "name": "Switch"
     },
     {
       "parameters": {
@@ -174,13 +254,13 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "loose",
+            "typeValidation": "strict",
             "version": 3
           },
           "conditions": [
             {
-              "id": "56540a4a-da93-4b9f-9faf-3eb020ca92e9",
-              "leftValue": "={{ $json.available }}",
+              "id": "fc35e70e-a773-412c-89e0-32dc6c05ed00",
+              "leftValue": "={{ $json.isAvailable }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",
@@ -190,34 +270,46 @@
           ],
           "combinator": "and"
         },
-        "looseTypeValidation": true,
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1488,
+        1600,
         0
       ],
-      "id": "0150c6af-bd55-4115-b07f-4d2346b9bae9",
+      "id": "c4a7d407-6ce3-4441-8a90-3d97f36cbedb",
       "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "const bookings = $input.all();\nconst request = $('Edit Fields').first().json;\n\nfunction parseDate(value) {\n  if (!value) return null;\n\n  const [day, month, year] = String(value)\n    .trim()\n    .split(\"-\")\n    .map(Number);\n\n  return new Date(year, month - 1, day);\n}\n\nconst requestedRoom = String(request.room_type || \"\")\n  .trim()\n  .toLowerCase();\n\nconst requestedCheckIn = parseDate(request.check_in_date);\nconst requestedCheckOut = parseDate(request.check_out_date);\n\nconst conflict = bookings.some(item => {\n  const booking = item.json;\n\n  // Availability-result rows ko ignore karo\n  const status = String(booking.Status || \"\")\n    .trim()\n    .toLowerCase();\n\n  if (status === \"room is available\") {\n    return false;\n  }\n\n  const existingRoom = String(booking.room_type || \"\")\n    .trim()\n    .toLowerCase();\n\n  if (existingRoom !== requestedRoom) {\n    return false;\n  }\n\n  const existingCheckIn = parseDate(booking.check_in_date);\n  const existingCheckOut = parseDate(booking.check_out_date);\n\n  if (!existingCheckIn || !existingCheckOut) {\n    return false;\n  }\n\n  return (\n    existingCheckIn < requestedCheckOut &&\n    existingCheckOut > requestedCheckIn\n  );\n});\n\nreturn [\n  {\n    json: {\n      ...request,\n      isAvailable: !conflict,\n      message: conflict\n        ? \"Room is not available\"\n        : \"Room is available\"\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1376,
+        0
+      ],
+      "id": "ec43b07a-e96d-453f-8a66-3ad9b62576a6",
+      "name": "Code in JavaScript1"
     },
     {
       "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "1QFcS7yUsCjeQz-VITJ2aHW-H8t-VVs-OcVy-4r6sWc0",
+          "value": "1WrY4dyhwk0zLICkccsdgevQOPh65YHavqStKfeHM7QU",
           "mode": "list",
-          "cachedResultName": "hotel booking",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QFcS7yUsCjeQz-VITJ2aHW-H8t-VVs-OcVy-4r6sWc0/edit?usp=drivesdk"
+          "cachedResultName": "hotel management system",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WrY4dyhwk0zLICkccsdgevQOPh65YHavqStKfeHM7QU/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QFcS7yUsCjeQz-VITJ2aHW-H8t-VVs-OcVy-4r6sWc0/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WrY4dyhwk0zLICkccsdgevQOPh65YHavqStKfeHM7QU/edit#gid=0"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
@@ -231,8 +323,7 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "email",
@@ -241,8 +332,7 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
               "id": "phone",
@@ -251,108 +341,88 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "check in date",
-              "displayName": "check in date",
+              "id": "check_in_date",
+              "displayName": "check_in_date",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "check out date",
-              "displayName": "check out date",
+              "id": "output",
+              "displayName": "output",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "number of days",
-              "displayName": "number of days",
+              "id": "room_type",
+              "displayName": "room_type",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "room type",
-              "displayName": "room type",
+              "id": "special_request",
+              "displayName": "special_request",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "number of guest",
-              "displayName": "number of guest",
+              "id": "missing_information",
+              "displayName": "missing_information",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "special request",
-              "displayName": "special request",
+              "id": "professional_summary",
+              "displayName": "professional_summary",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "missing information",
-              "displayName": "missing information",
+              "id": "check",
+              "displayName": "check",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "professional summary",
-              "displayName": "professional summary",
+              "id": "check_out_date",
+              "displayName": "check_out_date",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "confirmation email subject",
-              "displayName": "confirmation email subject",
+              "id": "number_of_guest",
+              "displayName": "number_of_guest",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "confirmation email for customer",
-              "displayName": "confirmation email for customer",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -363,33 +433,208 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1696,
-        -144
+        1968,
+        -272
       ],
-      "id": "4a59de74-5e0e-4b81-8fd8-66eec5e6df06",
-      "name": "Append row in sheet1",
+      "id": "45bf54d9-c355-42c0-93a7-36b128d2bb84",
+      "name": "Append row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "FIWRo1eMtpGSnH4g",
+          "id": "48nlxbnIeWAd3sYF",
           "name": "Google Sheets account"
         }
       }
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cca6420e-51f7-4ad3-bdab-12887f32c0a1",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "c03bd4ff-cd8e-4d8a-920d-cacca6b50e4c",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "ccfd6367-df88-4db2-bb55-f7f7fe5e65a3",
+              "name": "phone",
+              "value": "={{ $json.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "e1f3f007-6c02-450e-a706-f0c62e5db0d5",
+              "name": "check_in_date",
+              "value": "={{ $json.check_in_date }}",
+              "type": "string"
+            },
+            {
+              "id": "e2334910-bb76-43fe-9d45-d0406f13c570",
+              "name": "check_out_date",
+              "value": "={{ $json.check_out_date }}",
+              "type": "string"
+            },
+            {
+              "id": "66a0a5c2-a0af-4218-a8b7-df927e792d1a",
+              "name": "room_type",
+              "value": "={{ $json.room_type }}",
+              "type": "string"
+            },
+            {
+              "id": "34ac3b04-4c00-426b-8d13-2d7325dc7192",
+              "name": "number_of_guest",
+              "value": "={{ $json.number_of_guest }}",
+              "type": "string"
+            },
+            {
+              "id": "8768a99e-c343-462a-ae5b-d1f82ed069d6",
+              "name": "=Status",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1808,
+        -272
+      ],
+      "id": "0aa7ff1b-1975-4ec5-9b31-9266f2fcda46",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
         "promptType": "define",
-        "text": "write a mail with subject to to customer to select another type of room because it is not available this time ",
+        "text": "=if the room is available and the customer want booking then write a proper professional confirmation email with thankyou  with subject for booking of a hotel room only used the given info dont include extra data {{ $json.name }}{{ $json.check_in_date }}{{ $json.check_out_date }}\nif the customer want to cancel the booking the write a cancellation email \nif the customer ask any question then reply according to questions",
         "hasOutputParser": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1696,
-        96
+        2160,
+        -272
       ],
-      "id": "7022992d-e62b-4d25-9308-e5b3e40bd0fc",
+      "id": "c11b55bf-c475-42df-b457-b762cc749752",
       "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"email_subject\":\"\",\n  \"confirmation_email\":\"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2304,
+        336
+      ],
+      "id": "4343526c-3787-4af4-9745-153b8c0c005a",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Append row in sheet').item.json.email }}",
+        "subject": "={{ $json.output.email_subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.confirmation_email }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2528,
+        -272
+      ],
+      "id": "bfbc503f-e792-4fd8-a44d-a46b72a2a008",
+      "name": "Send a message",
+      "webhookId": "1f2d3993-f809-4896-a8f0-0221de5e1c2c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Yvxh9dKBPm1eQRl8",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=write a professional mail with a subject when the room is not available on required dates with apology{{ $json.name }}{{ $json.check_in_date }}{{$json.check_out_date}}{{ $json.room_type }}{{$json.number_of_guest}}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1856,
+        16
+      ],
+      "id": "975c8aff-72de-418a-afcb-cfedb8d3644c",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json.email }}",
+        "subject": "={{ $json.output.email_subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.confirmation_email }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2528,
+        16
+      ],
+      "id": "eb427375-f3e1-43ce-997a-9561da4f76b8",
+      "name": "Send a message1",
+      "webhookId": "b2645d98-9f51-44bd-b7d3-f466202acafb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Yvxh9dKBPm1eQRl8",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1WrY4dyhwk0zLICkccsdgevQOPh65YHavqStKfeHM7QU",
+          "mode": "list",
+          "cachedResultName": "hotel management system",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WrY4dyhwk0zLICkccsdgevQOPh65YHavqStKfeHM7QU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WrY4dyhwk0zLICkccsdgevQOPh65YHavqStKfeHM7QU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1392,
+        256
+      ],
+      "id": "85ad99ce-3a93-4261-bd33-2e7897771049",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "48nlxbnIeWAd3sYF",
+          "name": "Google Sheets account"
+        }
+      }
     },
     {
       "parameters": {
@@ -399,140 +644,37 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
-        1920,
-        400
+        2160,
+        320
       ],
-      "id": "201955c2-202f-40a3-b3c1-3b69578151be",
+      "id": "70fa52dc-2ac6-4e31-b177-cbeefab84279",
       "name": "Google Gemini Chat Model1",
       "credentials": {
         "googlePalmApi": {
-          "id": "0tJPGz6VUqPHVzUT",
+          "id": "t02EhobJ0BR1Zjz1",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n\t\"subject\":\"\",\n  \"email\":\"\"\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        2064,
-        400
-      ],
-      "id": "1e0d682b-5476-4bee-8163-2910b498974f",
-      "name": "Structured Output Parser1"
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $('Get row(s) in sheet').item.json.email }}",
-        "subject": "={{ $json.output.subject }}",
-        "emailType": "text",
-        "message": "={{ $json.output.email }}",
+        "modelName": "models/gemini-3.6-flash",
         "options": {}
       },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
       "position": [
-        2240,
-        96
+        304,
+        208
       ],
-      "id": "d9591c10-872a-4fbb-81bb-811e0f717039",
-      "name": "Send a message",
-      "webhookId": "8a47fc7e-9d36-489a-b948-6fe8b54b63a0",
+      "id": "502a55f0-07ca-4db3-a2e7-38779e659cb7",
+      "name": "Google Gemini Chat Model",
       "credentials": {
-        "gmailOAuth2": {
-          "id": "c6AdwRpnGyQWTxo6",
-          "name": "Gmail account"
+        "googlePalmApi": {
+          "id": "t02EhobJ0BR1Zjz1",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "write a mail to customer of the booking of room is confirmed with subject and give reply in structured form",
-        "hasOutputParser": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        1920,
-        -144
-      ],
-      "id": "f779fa69-58ad-42f0-a2aa-fc5a894212dd",
-      "name": "AI Agent2"
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $('Get row(s) in sheet').item.json.email }}",
-        "subject": "={{ $json.output.subject }}",
-        "emailType": "text",
-        "message": "={{ $json.output.email }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        2304,
-        -144
-      ],
-      "id": "f595a0a5-a853-4fc8-9ada-8e234d12c89f",
-      "name": "Send a message1",
-      "webhookId": "59842067-7c56-4f65-9180-5650c234877b",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "c6AdwRpnGyQWTxo6",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1QFcS7yUsCjeQz-VITJ2aHW-H8t-VVs-OcVy-4r6sWc0",
-          "mode": "list",
-          "cachedResultName": "hotel booking",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QFcS7yUsCjeQz-VITJ2aHW-H8t-VVs-OcVy-4r6sWc0/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QFcS7yUsCjeQz-VITJ2aHW-H8t-VVs-OcVy-4r6sWc0/edit#gid=0"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        1040,
-        0
-      ],
-      "id": "1e783db8-99c3-447f-a16b-4817241b96d1",
-      "name": "Get row(s) in sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "FIWRo1eMtpGSnH4g",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const bookings = $input.all();\n\nconst requestedRoom = $('Edit Fields').first().json['Room Type'];\nconst requestedCheckIn = new Date(\n  $('Edit Fields').first().json['Check-in']\n);\nconst requestedCheckOut = new Date(\n  $('Edit Fields').first().json['Check-out']\n);\n\nlet available = true;\n\nfor (const booking of bookings) {\n\n  if (booking.json['Room Type'] !== requestedRoom) {\n    continue;\n  }\n\n  const existingCheckIn = new Date(booking.json['Check-in']);\n  const existingCheckOut = new Date(booking.json['Check-out']);\n\n  if (\n    requestedCheckIn < existingCheckOut &&\n    requestedCheckOut > existingCheckIn\n  ) {\n    available = false;\n    break;\n  }\n}\n\nreturn [\n  {\n    json: {\n      available\n    }\n  }\n];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1264,
-        0
-      ],
-      "id": "43a5d36d-80d3-4906-ad94-b703f27601a7",
-      "name": "Code in JavaScript1"
     }
   ],
   "pinData": {},
@@ -559,17 +701,6 @@
         ]
       ]
     },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Structured Output Parser": {
       "ai_outputParser": [
         [
@@ -585,11 +716,46 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Switch",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        []
       ]
     },
     "Edit Fields": {
@@ -603,35 +769,52 @@
         ]
       ]
     },
-    "If": {
+    "Code in JavaScript1": {
       "main": [
         [
           {
-            "node": "Append row in sheet1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "AI Agent1",
+            "node": "If",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Google Gemini Chat Model1": {
-      "ai_languageModel": [
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
         [
           {
             "node": "AI Agent1",
-            "type": "ai_languageModel",
-            "index": 0
-          },
-          {
-            "node": "AI Agent2",
-            "type": "ai_languageModel",
+            "type": "main",
             "index": 0
           }
         ]
@@ -664,17 +847,6 @@
         ]
       ]
     },
-    "Append row in sheet1": {
-      "main": [
-        [
-          {
-            "node": "AI Agent2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "AI Agent2": {
       "main": [
         [
@@ -697,12 +869,28 @@
         ]
       ]
     },
-    "Code in JavaScript1": {
-      "main": [
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
         [
           {
-            "node": "If",
-            "type": "main",
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -715,12 +903,12 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "f615e2a5-1c29-4a2c-9507-1e33d3a11494",
+  "versionId": "3b5ce902-df28-40a7-b63b-aaf04315bfe8",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "1f0ec545d1bf74e46420201803c53c0fe4b4d8ea61cf08679c7f425a8423d67f"
+    "instanceId": "7312f4fb849b1bed59886309e189740109b43cea4de502fb29bbdbb59d551cd3"
   },
   "nodeGroups": [],
-  "id": "APiuEsBsI9IEpE6e",
+  "id": "am1rd8omffH417Uc",
   "tags": []
 }
