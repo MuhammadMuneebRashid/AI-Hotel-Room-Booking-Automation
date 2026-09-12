@@ -331,5 +331,11 @@ The project demonstrates how multiple automation tools can be connected to creat
 
 <img width="1920" height="1080" alt="99" src="https://github.com/user-attachments/assets/9b77375a-ac09-47ef-8a2d-a4cb1dcc12a6" />
 
+
+
+https://github.com/user-attachments/assets/25b9dc3f-6513-42a3-ba29-27780f0e92c8
+
+
+
 If you like this project then give it a star⭐ on GitHub.
 
