@@ -1,4 +1,4 @@
-# 🏨 AI Hotel Room Booking Automation
+🏨 AI Hotel Room Booking Automation
 
 An AI-powered hotel room booking automation system built with **n8n, Tally Forms, Google Sheets, JavaScript, AI Agents, and Email Automation**.
 
@@ -327,7 +327,8 @@ It focuses on practical implementation of:
 The project demonstrates how multiple automation tools can be connected to create a practical **AI-powered hotel booking workflow**.
 
 ##Author
-  Muneeb
+
+Muneeb
 
 <img width="1920" height="1080" alt="99" src="https://github.com/user-attachments/assets/9b77375a-ac09-47ef-8a2d-a4cb1dcc12a6" />
 
