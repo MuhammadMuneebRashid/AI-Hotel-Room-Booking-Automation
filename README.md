@@ -338,5 +338,5 @@ https://github.com/user-attachments/assets/25b9dc3f-6513-42a3-ba29-27780f0e92c8
 
 
 
-If you like this project then give it a star⭐ on GitHub.
+If you found this project useful then give it a star⭐ on GitHub.
 
